@@ -1,0 +1,63 @@
+pipeline {
+    agent any
+
+    environment {
+        DOCKER_IMAGE = 'node:16' // Use a Node.js image (can be changed based on the runtime)
+        IMAGE_NAME = 'helloworld' // Local image name
+        TAG = 'latest' // Tag for your image
+        GIT_REPO = 'https://github.com/Koushik0802/MyRepo.git' // Replace with your Git repository URL
+        GIT_BRANCH = 'main' // Replace with the branch you want to check out
+    }
+
+    stages {
+        stage('Clone Repository') {
+            steps {
+                script {
+                    // Clone the Git repository
+                    echo 'Cloning repository...'
+                    git 'https://github.com/yourusername/your-repo.git'
+                }
+            }
+        }
+
+        stage('Create Hello') {
+            steps {
+                script {
+                    echo 'file fetched from repository'
+                }
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    // Build the Docker image using the Dockerfile
+                    echo 'Building Docker Image'
+                    sh '''
+                    docker build -t ${IMAGE_NAME}:${TAG} .
+                    '''
+                }
+            }
+        }
+
+        stage('Run Hello World Inside Docker Container') {
+            steps {
+                script {
+                    // Running the hello.js file inside the Docker container
+                    echo 'Running Hello World inside Docker container'
+                    sh '''
+                        docker run --rm -v $(pwd)/hello.js:/usr/src/app/hello.js ${IMAGE_NAME}:${TAG} node /usr/src/app/hello.js
+						'''
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            echo 'Cleaning up after the build...'
+            // Cleanup, such as removing temporary files or containers
+            sh 'docker system prune -f'
+        }
+    }
+}
