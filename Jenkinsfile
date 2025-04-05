@@ -25,7 +25,8 @@ pipeline {
             }
         }
 
-        stage('Run in Docker Container') {
+        stage('Run in Docker Container') 
+		{
             steps {
                 script {
                     // Run the JS file inside the container
