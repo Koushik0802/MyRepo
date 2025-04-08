@@ -11,8 +11,8 @@ pipeline {
         
         stage('Execute') {
             steps {
-                bat 'javac simple-java/HelloWorld.java'
-                bat 'java -cp simple-java HelloWorld'
+              javac simple-java/Javafile.java
+              java Javafile.java
             }
         }
     }
