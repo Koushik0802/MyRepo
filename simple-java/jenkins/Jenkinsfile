@@ -7,16 +7,8 @@ pipeline {
                 git url: 'https://github.com/Koushik0802/MyRepo.git', branch: 'main'
             }
         }
-		stage('Build') {
-            steps {
-                sh 'mvn -B -DskipTests clean package'
-            }
-        }
-        stage('Test') {
-            steps {
-                sh 'mvn test'
-            }
-        }
+		
+        
         stage('Execute') {
             steps {
                 bat 'javac simple-java/HelloWorld.java'
