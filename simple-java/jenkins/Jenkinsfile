@@ -1,18 +1,19 @@
 pipeline {
     agent any
-
     stages {
         stage('Checkout') {
             steps {
                 git url: 'https://github.com/Koushik0802/MyRepo.git', branch: 'main'
             }
         }
-		
-        
+        stage('Compile') {
+            steps {
+                sh 'javac MyProgram.java'
+            }
+        }
         stage('Execute') {
             steps {
-              javac simple-java/Javafile.java
-              java Javafile.java
+                sh 'java MyProgram'
             }
         }
     }
