@@ -1,9 +1,12 @@
 pipeline {
     agent any
-    options {
-        skipStagesAfterUnstable()
-    }
     stages {
+	stage('SCM') {
+            steps {
+			   git https://github.com/Koushik0802/MyRepo.git   
+                echo "Pulling code from GitHub
+            }
+        }
         stage('Build') {
             steps {
                 sh 'mvn -B -DskipTests clean package'
@@ -12,16 +15,6 @@ pipeline {
         stage('Test') {
             steps {
                 sh 'mvn test'
-            }
-            post {
-                always {
-                    junit 'target/surefire-reports/*.xml'
-                }
-            }
-        }
-        stage('Deliver') { 
-            steps {
-                sh './jenkins/scripts/deliver.sh' 
             }
         }
     }
