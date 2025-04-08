@@ -8,12 +8,12 @@ pipeline {
         }
         stage('Compile') {
             steps {
-                sh 'javac MyProgram.java'
+              javac Javafile.java
             }
         }
         stage('Execute') {
             steps {
-                sh 'java MyProgram'
+                java javafile
             }
         }
     }
