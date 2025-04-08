@@ -3,8 +3,8 @@ pipeline {
     stages {
 	stage('SCM') {
             steps {
-			   git https://github.com/Koushik0802/MyRepo.git   
-                echo "Pulling code from GitHub
+		git https://github.com/Koushik0802/MyRepo.git   
+                echo "Pulling code from GitHub"
             }
         }
         stage('Build') {
