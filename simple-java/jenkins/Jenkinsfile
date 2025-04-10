@@ -1,20 +1,39 @@
 pipeline {
     agent any
+   
+    
     stages {
         stage('Checkout') {
             steps {
-                git url: 'https://github.com/Koushik0802/MyRepo.git', branch: 'main'
+				git url: 'https://github.com/Koushik0802/MyRepo.git', branch: 'main'
             }
         }
-        stage('Compile') {
+        
+        stage('Build') {
             steps {
-              javac Javafile.java
+                // Compile the Java file using Windows command
+                bat 'javac Javafile.java'
             }
         }
-        stage('Execute') {
+        
+        stage('Run') {
             steps {
-                java javafile
+                // Execute the Java program using Windows command
+                bat 'java Javafile'
             }
+        }
+    }
+    
+    post {
+        always {
+            // Clean up workspace after build
+            cleanWs()
+        }
+        success {
+            echo 'Build and execution completed successfully!'
+        }
+        failure {
+            echo 'Build failed!'
         }
     }
 }
