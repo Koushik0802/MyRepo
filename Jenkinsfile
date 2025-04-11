@@ -2,57 +2,59 @@ pipeline {
     agent any
 
     environment {
-        IMAGE_NAME = 'calculator'
+        DEPLOY_DIR = '/opt/calculator-app' 
+		IMAGE_NAME = 'calculator'
         IMAGE_TAG = '1.0'
-        DOCKER_HUB_REPO = 'koushik0805/calculator'
-        // The ID of your Docker Hub credentials stored in Jenkins
-        DOCKER_CREDENTIALS_ID = 'PipelineSCM'
     }
 
     stages {
         stage('Checkout') {
             steps {
-                git url: 'https://github.com/Koushik0802/MyRepo.git', branch: 'main'
+               git url: 'https://github.com/Koushik0802/MyRepo.git', branch: 'main'
             }
         }
 
-        stage('Build with Maven') {
+        stage('Build') {
             steps {
-                sh 'ls -la
-                sh 'mvn clean package -DskipTests'
-                 dir("${env.WORKSPACE}") 
+                echo "Building the project..."
+                sh 'mvn clean package'
             }
         }
 
         stage('Test') {
             steps {
+                echo "Running tests..."
                 sh 'mvn test'
             }
         }
-
-        stage('Build Docker Image') {
+        		stage('Build Docker Image') {
             steps {
-                script {
+                script 
+                {
                     sh "docker build -t ${IMAGE_NAME}:${IMAGE_TAG} ."
                 }
             }
         }
-
-        stage('Push to Docker Hub') {
+        stage('Deploy')
+		{
             steps {
-                script {
-                    docker.withRegistry('https://index.docker.io/v1/', "${DOCKER_CREDENTIALS_ID}") {
-                        sh "docker tag ${IMAGE_NAME}:${IMAGE_TAG} ${DOCKER_HUB_REPO}:${IMAGE_TAG}"
-                        sh "docker push ${DOCKER_HUB_REPO}:${IMAGE_TAG}"
-                    }
-                }
+                echo "Deploying JAR to $DEPLOY_DIR"
+                sh """
+                    mkdir -p $DEPLOY_DIR
+                    cp target/*.jar $DEPLOY_DIR/
+                """
             }
         }
+		
+
     }
 
     post {
-        always {
-            cleanWs()
+        success {
+            echo "Build and Deployment completed successfully!"
+        }
+        failure {
+            echo "Something went wrong in the pipeline."
         }
     }
 }
