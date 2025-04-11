@@ -16,7 +16,6 @@ pipeline {
 
         stage('Build with Maven') {
             steps {
-		dir('simple-java')
                 sh 'mvn clean package -DskipTests'
             }
         }
