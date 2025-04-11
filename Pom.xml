@@ -7,14 +7,28 @@
     <groupId>com.example</groupId>
     <artifactId>simple-java</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
 
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <main.class>com.example.Calculator</main.class>
     </properties>
 
+ <build>
+    <sourceDirectory>${basedir}</sourceDirectory> <!-- This line tells Maven to compile Java files from the current dir -->
+    <plugins>
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <version>3.8.1</version>
+        </plugin>
+    </plugins>
+</build>
+
     <dependencies>
-        <!-- JUnit 4 for unit testing -->
+        <!-- JUnit for testing (optional) -->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
@@ -22,16 +36,4 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-
-    <build>
-        <plugins>
-            <!-- Compiler Plugin -->
-            <plugin>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.1</version>
-            </plugin>
-
-            <!-- JAR Packaging -->
-            <plugin>
-                <artifactId>maven-jar-plugin</artifactId>
-                <version>3.
+</project>
