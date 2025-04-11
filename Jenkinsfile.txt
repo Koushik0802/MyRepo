@@ -1,7 +1,11 @@
 pipeline {
     agent any
 
-
+    environment {
+        // Set your Docker image name and tag
+        IMAGE_NAME = 'calculator'
+        IMAGE_TAG = '1.0'
+    }
 
     stages {
         stage('Checkout') {
@@ -22,13 +26,12 @@ pipeline {
             }
         }
 
-    }
-
-    post 
-	{
-        always 
-		{
-            cleanWs()
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    sh "docker build -t ${IMAGE_NAME}:${IMAGE_TAG} ."
+                }
+            }
         }
     }
 }
