@@ -18,7 +18,9 @@ pipeline {
 
         stage('Build with Maven') {
             steps {
+                sh 'ls -la
                 sh 'mvn clean package -DskipTests'
+                 dir("${env.WORKSPACE}") 
             }
         }
 
