@@ -9,19 +9,8 @@ pipeline {
                 git 'https://github.com/Koushik0802/MyRepo.git'
             }
         }
-        stage('Build with Maven') {
-            steps {
-                dir('simple-java') 
-                    sh 'mvn clean package -DskipTests'
-                }
-            }
+
         }
-        stage('Test') {
-            steps {
-                dir('simple-java') {
-                    sh 'mvn test'
-                }
-            }
-        }
+
     }
-}
+
