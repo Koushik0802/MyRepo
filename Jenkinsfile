@@ -2,9 +2,11 @@ pipeline {
     agent any
 
     environment {
-        // Set your Docker image name and tag
         IMAGE_NAME = 'calculator'
         IMAGE_TAG = '1.0'
+        DOCKER_HUB_REPO = 'koushik0805/calculator'
+        // The ID of your Docker Hub credentials stored in Jenkins
+        DOCKER_CREDENTIALS_ID = 'PipelineSCM'
     }
 
     stages {
@@ -32,6 +34,23 @@ pipeline {
                     sh "docker build -t ${IMAGE_NAME}:${IMAGE_TAG} ."
                 }
             }
+        }
+
+        stage('Push to Docker Hub') {
+            steps {
+                script {
+                    docker.withRegistry('https://index.docker.io/v1/', "${DOCKER_CREDENTIALS_ID}") {
+                        sh "docker tag ${IMAGE_NAME}:${IMAGE_TAG} ${DOCKER_HUB_REPO}:${IMAGE_TAG}"
+                        sh "docker push ${DOCKER_HUB_REPO}:${IMAGE_TAG}"
+                    }
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            cleanWs()
         }
     }
 }
