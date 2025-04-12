@@ -33,7 +33,7 @@ pipeline {
             steps {
                 echo "Deploying JAR to $DEPLOY_DIR"
 	        bat """
-	        move target\\*.jar ${DEPLOY_DIR}
+	        move target\\*.jar "${DEPLOY_DIR}\\"
 	            """
             }
         }
