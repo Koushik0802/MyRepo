@@ -1,14 +1,10 @@
 pipeline {
     agent any
 
-    triggers {
-        githubPush()
-    }
-
     environment {
         DEPLOY_DIR = '/opt/Calculator'
         IMAGE_NAME = 'calculator'
-        IMAGE_TAG = '1.0'
+        IMAGE_TAG = "${BUILD_NUMBER}"
     }
 
     stages {
