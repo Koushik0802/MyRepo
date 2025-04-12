@@ -34,7 +34,7 @@ pipeline {
                 echo "Deploying JAR to $DEPLOY_DIR"
                 bat """
                     mkdir -p $DEPLOY_DIR
-                    C:\ProgramData\Jenkins\.jenkins\workspace\Pipeline SCM>move target/*.jar $DEPLOY_DIR/
+                    move C:\ProgramData\Jenkins\.jenkins\workspace\Pipeline SCM>move target/*.jar $DEPLOY_DIR/
                 """
             }
         }
