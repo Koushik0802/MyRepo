@@ -33,7 +33,7 @@ pipeline {
                 echo "Deploying JAR to ${DEPLOY_DIR}..."
                 sh """
                     sudo mkdir -p ${DEPLOY_DIR}
-                    sudo cp target/*.jar ${DEPLOY_DIR}/
+                    sudo cp target/calculator-app-1.0.jar ${DEPLOY_DIR}/
                 """
             }
         }
