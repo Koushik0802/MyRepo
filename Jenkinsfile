@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        DEPLOY_DIR = '/home/ubuntu/Calculator'
+        DEPLOY_DIR = '/tmp/Calculator'
         IMAGE_NAME = 'calculator'
         IMAGE_TAG = "${BUILD_NUMBER}"
     }
