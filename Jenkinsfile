@@ -21,21 +21,15 @@ pipeline {
             }
         }
 
-        stage('Test') {
+        stage('Test & deploy') {
             steps {
                 echo "Running tests..."
                 sh 'mvn test'
+                echo "deploying..."
+                sh 'cp /var/lib/jenkins/workspace/Jenkins/target/calculator-app-1.0.jar  ${DEPLOY_DIR}'
             }
         }
 
-        stage('Deploy') {
-            steps {
-                echo "Deploying JAR to ${DEPLOY_DIR}..."
-                sh """
-                    cp /var/lib/jenkins/workspace/Jenkins/target/calculator-app-1.0.jar ${DEPLOY_DIR}/
-                """
-            }
-        }
 
         stage('Build Docker Image') {
             steps {
