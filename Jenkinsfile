@@ -34,7 +34,7 @@ pipeline {
                 echo "Deploying JAR to $DEPLOY_DIR"
                 bat """
                     mkdir -p $DEPLOY_DIR
-                    cp target/*.jar $DEPLOY_DIR/
+                    move target/*.jar $DEPLOY_DIR/
                 """
             }
         }
