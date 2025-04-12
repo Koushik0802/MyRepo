@@ -2,8 +2,8 @@ pipeline {
     agent any
 
     environment {
-        DEPLOY_DIR = /opt/Calculator/ 
-		IMAGE_NAME = 'calculator'
+        DEPLOY_DIR = '/opt/Calculator/'   // <-- fixed
+        IMAGE_NAME = 'calculator'
         IMAGE_TAG = '1.0'
     }
 
@@ -28,20 +28,18 @@ pipeline {
             }
         }
 
-        stage('Deploy')
-		{
+        stage('Deploy') {
             steps {
                 echo "Deploying JAR to $DEPLOY_DIR"
-	        sh """
-	        cp target\\*.jar ${DEPLOY_DIR}
-	            """
+                sh """
+                cp target/*.jar ${DEPLOY_DIR}
+                """
             }
         }
-		stage('Build Docker Image') 
-				{
+
+        stage('Build Docker Image') {
             steps {
-                script 
-                {
+                script {
                     sh "docker build -t ${IMAGE_NAME}:${IMAGE_TAG} ."
                 }
             }
@@ -57,7 +55,3 @@ pipeline {
         }
     }
 }
-
-
-
-        		
