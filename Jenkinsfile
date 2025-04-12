@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        DEPLOY_DIR = '/opt/calculator-app' 
+        DEPLOY_DIR = 'E:/git/calculator-app' 
 		IMAGE_NAME = 'calculator'
         IMAGE_TAG = '1.0'
     }
@@ -10,43 +10,35 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-               git url: 'https://github.com/Koushik0802/MyRepo.git', branch: 'main'
+               git url: 'https://github.com/Koubatik0802/MyRepo.git', branch: 'main'
             }
         }
 
         stage('Build') {
             steps {
                 echo "Building the project..."
-                sh 'mvn clean package'
+                bat 'mvn clean package'
             }
         }
 
         stage('Test') {
             steps {
                 echo "Running tests..."
-                sh 'mvn test'
+                bat 'mvn test'
             }
         }
-        		stage('Build Docker Image') {
-            steps {
-                script 
-                {
-                    sh "docker build -t ${IMAGE_NAME}:${IMAGE_TAG} ."
-                }
-            }
-        }
+
         stage('Deploy')
 		{
             steps {
                 echo "Deploying JAR to $DEPLOY_DIR"
-                sh """
+                bat """
                     mkdir -p $DEPLOY_DIR
                     cp target/*.jar $DEPLOY_DIR/
                 """
             }
         }
 		
-
     }
 
     post {
