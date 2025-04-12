@@ -33,7 +33,7 @@
                 <version>3.4.2</version>
                 <configuration>
                     <descriptorRefs>
-                        <descriptorRef>jardependencies</descriptorRef>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
                     </descriptorRefs>
                     <archive>
                         <manifest>
