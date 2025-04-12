@@ -1,11 +1,12 @@
 pipeline {
     agent any
-    
-  triggers {
+
+    triggers {
         githubPush()
     }
+
     environment {
-        DEPLOY_DIR = '/opt/Calculator/'   // <-- fixed
+        DEPLOY_DIR = '/opt/Calculator'
         IMAGE_NAME = 'calculator'
         IMAGE_TAG = '1.0'
     }
@@ -13,7 +14,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-               git url: 'https://github.com/Koushik0802/MyRepo.git', branch: 'main'
+                git url: 'https://github.com/Koushik0802/MyRepo.git', branch: 'main'
             }
         }
 
@@ -33,29 +34,28 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                echo "Deploying JAR to $DEPLOY_DIR"
+                echo "Deploying JAR to ${DEPLOY_DIR}..."
                 sh """
-                sudo mkdir -p /opt/Calculator
-                sudo cp target/*.jar ${DEPLOY_DIR}
+                    sudo mkdir -p ${DEPLOY_DIR}
+                    sudo cp target/*.jar ${DEPLOY_DIR}/
                 """
             }
         }
 
         stage('Build Docker Image') {
             steps {
-                script {
-                    sh "docker build -t ${IMAGE_NAME}:${IMAGE_TAG} ."
-                }
+                echo "Building Docker image..."
+                sh "docker build -t ${IMAGE_NAME}:${IMAGE_TAG} ."
             }
         }
     }
 
     post {
         success {
-            echo "Build and Deployment completed successfully!"
+            echo "✅ Build and Deployment completed successfully!"
         }
         failure {
-            echo "Something went wrong in the pipeline."
+            echo "❌ Something went wrong in the pipeline."
         }
     }
 }
