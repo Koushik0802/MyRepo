@@ -2,7 +2,7 @@ FROM openjdk:17-jdk-slim
 
 WORKDIR /app
 
-COPY target/*.jar final.jar
+COPY target/calculator-app.jar final.jar
 
 EXPOSE 8080
 
