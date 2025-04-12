@@ -32,6 +32,7 @@ pipeline {
             steps {
                 echo "Deploying JAR to $DEPLOY_DIR"
                 sh """
+                mkdir Calculator
                 cp target/*.jar ${DEPLOY_DIR}
                 """
             }
