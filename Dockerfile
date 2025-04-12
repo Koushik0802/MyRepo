@@ -2,7 +2,7 @@ FROM openjdk:17-jdk-slim
 
 WORKDIR /app
 
-COPY target/calculator-app.jar final.jar
+COPY /var/lib/jenkins/workspace/Jenkins/target/calculator-app.jar final.jar
 
 EXPOSE 8080
 
