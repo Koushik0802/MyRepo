@@ -33,7 +33,7 @@ pipeline {
                 echo "Deploying JAR to ${DEPLOY_DIR}..."
                 sh """
                     mkdir -p ${DEPLOY_DIR}
-                    cp target/calculator-app-1.0.jar ${DEPLOY_DIR}/
+                    cp /var/lib/jenkins/workspace/Jenkins/target/calculator-app-1.0.jar ${DEPLOY_DIR}/
                 """
             }
         }
