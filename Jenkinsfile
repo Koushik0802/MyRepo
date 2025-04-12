@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        DEPLOY_DIR = 'E:/git/calculator-app' 
+        DEPLOY_DIR = /opt/Calculator/ 
 		IMAGE_NAME = 'calculator'
         IMAGE_TAG = '1.0'
     }
@@ -17,14 +17,14 @@ pipeline {
         stage('Build') {
             steps {
                 echo "Building the project..."
-                bat 'mvn clean package'
+                sh 'mvn clean package'
             }
         }
 
         stage('Test') {
             steps {
                 echo "Running tests..."
-                bat 'mvn test'
+                sh 'mvn test'
             }
         }
 
@@ -32,12 +32,20 @@ pipeline {
 		{
             steps {
                 echo "Deploying JAR to $DEPLOY_DIR"
-	        bat """
-	        move target\\*.jar "${DEPLOY_DIR}\\"
+	        sh """
+	        cp target\\*.jar ${DEPLOY_DIR}
 	            """
             }
         }
-		
+		stage('Build Docker Image') 
+				{
+            steps {
+                script 
+                {
+                    sh "docker build -t ${IMAGE_NAME}:${IMAGE_TAG} ."
+                }
+            }
+        }
     }
 
     post {
@@ -49,3 +57,7 @@ pipeline {
         }
     }
 }
+
+
+
+        		
