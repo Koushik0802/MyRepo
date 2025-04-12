@@ -1,6 +1,9 @@
 pipeline {
     agent any
-
+    
+  triggers {
+        githubPush()
+    }
     environment {
         DEPLOY_DIR = '/opt/Calculator/'   // <-- fixed
         IMAGE_NAME = 'calculator'
@@ -32,8 +35,8 @@ pipeline {
             steps {
                 echo "Deploying JAR to $DEPLOY_DIR"
                 sh """
-                mkdir Calculator
-                cp target/*.jar ${DEPLOY_DIR}
+                sudo mkdir -p /opt/Calculator
+                sudo cp target/*.jar ${DEPLOY_DIR}
                 """
             }
         }
