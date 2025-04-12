@@ -6,7 +6,7 @@
 
     <groupId>com.example</groupId>
     <artifactId>calculator-app</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
 
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
@@ -33,7 +33,7 @@
                 <version>3.4.2</version>
                 <configuration>
                     <descriptorRefs>
-                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                        <descriptorRef>jardependencies</descriptorRef>
                     </descriptorRefs>
                     <archive>
                         <manifest>
