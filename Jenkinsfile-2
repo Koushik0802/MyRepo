@@ -6,8 +6,8 @@ pipeline {
     }
 
     environment {
-        DEPLOY_DIR = '/tmp/Calculator'
-        IMAGE_NAME = 'Calculator'
+        DEPLOY_DIR = '/tmp/DCalculator'
+        IMAGE_NAME = 'DCalculator'
         IMAGE_TAG = "${BUILD_NUMBER}"
     }
 
@@ -40,7 +40,7 @@ pipeline {
                     echo "Building Docker image"
                     sh "docker build -t ${IMAGE_NAME}:${IMAGE_TAG} ."
                     echo "Running container"
-                    sh "docker run -d -p 8081:8080 --name Calculator ${IMAGE_NAME}:${IMAGE_TAG}"
+                    sh "docker run -d -p 8081:8080 --name DCalculator ${IMAGE_NAME}:${IMAGE_TAG}"
                 }
             }
         }
