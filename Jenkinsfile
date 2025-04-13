@@ -22,21 +22,23 @@ pipeline {
             }
         }
 
-        stage('Test & deploy') {
+        stage('Test & Deploy') {
             steps {
                 echo "Running tests..."
                 sh 'mvn test'
-                echo "deploying..."
-                sh 'cp /var/lib/jenkins/workspace/Jenkins/target/calculator-app-1.0.jar  ${DEPLOY_DIR}'
+                echo "Deploying..."
+                sh 'cp target/calculator-app-1.0.jar ${DEPLOY_DIR}'
             }
         }
 
-
         stage('Build Docker Image') {
             steps {
-                echo "Building Docker image..."
-                sh "docker build -t ${IMAGE_NAME}:${IMAGE_TAG} ."
-                sh "docker run -d --name container ${IMAGE_NAME}:${IMAGE_TAG}
+                script {
+                    echo "Building Docker image..."
+                    sh "docker build -t ${IMAGE_NAME}:${IMAGE_TAG} ."
+                    echo "Running container"
+                    sh "docker run -d -p 8081:8080 --name Calculator ${IMAGE_NAME}:${IMAGE_TAG}"
+                }
             }
         }
     }
