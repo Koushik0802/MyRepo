@@ -1,6 +1,5 @@
 pipeline {
     agent any
-
     environment {
         DEPLOY_DIR = '/tmp/Calculator'
         IMAGE_NAME = 'calculator'
